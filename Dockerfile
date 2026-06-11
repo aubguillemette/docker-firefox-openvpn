@@ -19,7 +19,7 @@ FROM jlesage/baseimage-gui:alpine-3.23-v4.11.3
 ARG DOCKER_IMAGE_VERSION=
 
 # Define software versions.
-ARG FIREFOX_VERSION=145.0-r0
+ARG FIREFOX_VERSION=151.0.3-r0
 #ARG PROFILE_CLEANER_VERSION=2.36
 
 # Define software download URLs.
@@ -87,6 +87,14 @@ RUN \
 # Add files.
 COPY rootfs/ /
 COPY --from=membarrier /tmp/membarrier_check /usr/bin/
+
+# Fix line endings (Windows CRLF → Unix LF).
+RUN \
+    find /etc/cont-env.d /etc/cont-init.d /etc/services.d -type f -exec sed -i 's/\r$//' {} \; && \
+    find /usr/local/bin -type f -exec sed -i 's/\r$//' {} \; && \
+    sed -i 's/\r$//' /startapp.sh && \
+    chmod +x /startapp.sh && \
+    true
 
 # Set internal environment variables.
 RUN \
