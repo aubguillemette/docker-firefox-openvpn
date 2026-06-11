@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /usr/bin/pkill -f "openvpn --config"

@@ -56,6 +56,9 @@ RUN \
         xdotool \
         # A font is needed.
         font-dejavu \
+        # OpenVPN support.
+        openvpn \
+        curl \
         && \
     # Remove unneeded icons.
     find /usr/share/icons/Adwaita -type d -mindepth 1 -maxdepth 1 -not -name 16x16 -not -name scalable -exec rm -rf {} ';' && \
@@ -107,7 +110,10 @@ RUN \
 ENV \
     FF_OPEN_URL= \
     FF_KIOSK=0 \
-    FF_CUSTOM_ARGS=
+    FF_CUSTOM_ARGS= \
+    OPENVPN_ENABLED=0 \
+    OPENVPN_CONFIG_URL= \
+    DNS_SERVERS="1.1.1.1 8.8.8.8"
 
 # Metadata.
 LABEL \
